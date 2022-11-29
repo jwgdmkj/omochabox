@@ -76,6 +76,7 @@ yside = np.linspace(0, 33, 33)
 X, Y = np.meshgrid(xside,yside)
 
 # Z = np.exp(-((X-1)**2+Y**2))  # 각 격자에 거기에 들어갈 값
+arr = np.flip(arr)  # plot은 아래에서부터 0이기 때문에 역순이라 뒤집어줘야됨.
 Z = np.array(arr)
 
 # Plot the density map using nearest-neighbor interpolation
