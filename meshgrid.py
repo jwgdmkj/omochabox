@@ -53,7 +53,7 @@ totalnum = 0
 for i in range(33):
     tmparr = []
     for j in range(50):
-        number = float(contentlist[i*33+j])
+        number = float(contentlist[i*50+j])
         tmparr.append(number*255)
         totalnum += float(number)
 
