@@ -1,10 +1,12 @@
 import json
 import os
 
-# dir = 'C:/Users/jsk/Desktop/김정수 (1)/라벨링'
 dir = 'C:/Users/jsk/Desktop/라벨샘플'
 from collections import OrderedDict
 
+"""
+영역이 겹치는지 보는 함수
+"""
 def getInnerTextRegionRatio(objectBbox, textBbox):
     textBbox_area = (textBbox[2] - textBbox[0] + 1) * (textBbox[3] - textBbox[1] + 1)
 
@@ -37,6 +39,9 @@ for filename in os.listdir(dir):
         ganpannoise = []
 
 
+        """
+        각각의 flag가 True라면, 그것을 각 list에 append시킴.
+        """
         for i in range(len(shapes)):
             if shapes[i]["flags"]["ganpan_object"] == True :
                 ganpanname.append(shapes[i])
@@ -47,11 +52,12 @@ for filename in os.listdir(dir):
             elif shapes[i]["flags"]["noise"] == True :
                 ganpannoise.append(shapes[i])
 
-        print(len(ganpanname), ganpanname)
-        print(len(ganpantext),ganpantext)
-        print(len(ganpanphone),ganpanphone)
-        print(len(ganpannoise),ganpannoise)
-        # 새로 구축할 녀석
+        # print(len(ganpanname), ganpanname)
+        # print(len(ganpantext),ganpantext)
+        # print(len(ganpanphone),ganpanphone)
+        # print(len(ganpannoise),ganpannoise)
+
+        # 새로 구축할 img
         file_data = OrderedDict()
         img_name = text["imagePath"][:-4]
         # 최상단 : 메타
@@ -110,6 +116,10 @@ for filename in os.listdir(dir):
                 numpoint_arr.append(max(numpoint_arry))
                 print('ganpanmaxmin ', numpoint_arr)
 
+                """
+                간판 영역과 특정 flag의 영역이 겹치는 부분이 0.9를 넘는다면
+                그 flag는 해당 간판의 일부분이므로, 이 간판 내부의 문구로 취급
+                """
                 ratio = getInnerTextRegionRatio(points_arr, numpoint_arr)
                 if ratio > 0.9:
                     txttmp = {}
@@ -150,6 +160,9 @@ for filename in os.listdir(dir):
                     tmp_data["words"].append(txttmp)
             # ----------------- 노이즈 처리 끝 ----------------------------
 
+            """
+            roi_name과 occlusion, vertical 여부 정리
+            """
             tmp_data["roi_name"] = ganpanname[i]["label"]
             # tmp_data["category"] = 'store_name'
             tmp_data["occlusion"] = ganpanname[i]["flags"]["occlusion"]
