@@ -71,3 +71,24 @@ if True:
                             nf.write(tmpstr)
 
                     i = i + loopnum + 1 + 1   # 기존 i + 얼굴갯수 있는 줄 + 얼굴갯수의 다음줄로 넘어가야 됨.
+    
+    # dir_filenum = []
+    # dir_folder = []
+    # print('dirlist ', dir_list)
+    # for dirname in dir_list:
+    #     dir_folder.append(datapath + '/' + dirname)
+    # print('dirfolder : ' , dir_folder)
+    # print('dirnum: ' , dir_filenum)
+    #
+    # move_dir = '//mldisk.sogang.ac.kr/exchange/김정수/Face_detection/WIDER_FACE/WIDER_val/all_img'
+    # # os.makedirs(datapath + '/' + 'train')
+    # # os.makedirs(datapath + '/' + 'test')
+    #
+    # # 80%만 test로 옮기기
+    # for i, dirname in enumerate(dir_list):
+    #     dir_celeb = os.listdir(datapath+'/'+dirname)
+    #     for j, file in enumerate(dir_celeb):
+    #         #print(datapath + '/' + dirname + '/' + file)
+    #         if(file == 'Thumbs.db'):
+    #             continue
+    #         shutil.move(datapath + '/' + dirname + '/' + file, move_dir)r
