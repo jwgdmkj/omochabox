@@ -38,6 +38,27 @@ with open('gt.txt', 'r') as file_data:
     # cv2.waitKey(0)
     # cv2.destroyAllWindows()
 
-print(arr)
-print(len(arr))
-print(arrsum)
+    
+# make density map using gaussian kernel    
+img_size = (width, height)
+imgidx = 0
+for gt in gtarr :
+    density_map = np.zeros((img_size[1], img_size[0]), dtype=np.float32)
+    # print(gt)
+    # add points onto basemap
+    for point in gt:
+        base_map = np.zeros((img_size[1], img_size[0]), dtype=np.float32)
+        # subtract 1 to account for 0 indexing
+        base_map[int(round(point[1]) - 1), int(round(point[0]) - 1)] += 1
+        density_map += scipy.ndimage.filters.gaussian_filter(base_map, sigma=16, mode='constant')
+
+    fig, ax = plt.subplots()
+    ax.imshow(density_map, cmap='hot', interpolation='nearest')
+    # plt.show()
+    ax.set_axis_off()
+    plt.savefig('./density_map/ht21_' + str(imgidx).zfill(3) + '.png', bbox_inches='tight')
+    plt.close(fig)
+    imgidx += 1
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()
